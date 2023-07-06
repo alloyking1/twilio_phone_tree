@@ -31,7 +31,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::any('/call', [PhoneTreeLivewireController::class, 'call'])->name('phone-tree.call');
-Route::any('/customer-care', [PhoneTreeLivewireController::class, 'customerCare'])->name('phone-tree.customer-care');
+Route::any('/process-call', [PhoneTreeLivewireController::class, 'processCall'])->name('phone-tree.process-call');
+Route::any('/speak-to-agent', [PhoneTreeLivewireController::class, 'speakToAgent'])->name('phone-tree.speak-to-agent');
+Route::any('/agent-accept-call', [PhoneTreeLivewireController::class, 'agentAcceptCall'])->name('phone-tree.agent-accept-call');
 
 
 require __DIR__ . '/auth.php';
