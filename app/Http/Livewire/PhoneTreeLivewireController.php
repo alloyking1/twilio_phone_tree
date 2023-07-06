@@ -80,6 +80,7 @@ class PhoneTreeLivewireController extends Component
 
     public function makeCall()
     {
+        csrf_token();
         // make the call to your agent
         $client = new Client(getenv("TWILIO_ACCOUNT_SID"), getenv("TWILIO_AUTH_TOKEN"));
 
@@ -94,6 +95,7 @@ class PhoneTreeLivewireController extends Component
     public function agentAcceptCall()
     {
         try {
+            csrf_token();
             $response = new VoiceResponse();
             $dial = $response->dial();
             $dial->queue('support');
