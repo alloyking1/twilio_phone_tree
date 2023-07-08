@@ -19,7 +19,7 @@ class PhoneTreeLivewireController extends Component
             'action' => route('phone-tree.process-call'),
             'method' => 'GET'
         ]);
-        $gather->say('press 1 for marketing, press 2 for customer care');
+        $gather->say('Thanks for calling. This is a phone tree application for educational purpose. press 1 for marketing, press 2 for customer care');
         $response->say('We didn\'t receive any input. Goodbye!');
         return response($response)->header('Content-Type', 'text/xml');
     }
@@ -48,14 +48,14 @@ class PhoneTreeLivewireController extends Component
             'action' => route('phone-tree.speak-to-agent'),
             'method' => 'GET'
         ]);
-        $gather->say('Marketing, press 1 to listen to ...., press 2 to speak with an agent');
+        $gather->say('This is the customer care department, press 1 to listen to listen to a helpful voice note or press 2 to speak with an agent');
         return response($response)->header('Content-Type', 'text/xml');
     }
 
     public function marketing()
     {
         $response = new VoiceResponse();
-        $response->say("This is the marketing department. More can be said here");
+        $response->say("This is the marketing department. Instructions on how to solve your marketing issues will go here");
         return response($response)->header('Content-Type', 'text/xml');
     }
 
@@ -69,7 +69,7 @@ class PhoneTreeLivewireController extends Component
             case 2:
                 //add caller to queue for agent
                 $response->say('Thanks for reaching out. You have been added to a queue. An agent will get to you shortly');
-                $response->enqueue('support', ['url' => 'about_to_connect.xml']); //fix
+                $response->enqueue('support', ['url' => 'about_to_connect.xml']);
                 return response($response)->header('Content-Type', 'text/xml');
             case 0:
                 return back;
