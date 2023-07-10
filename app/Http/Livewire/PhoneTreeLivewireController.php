@@ -33,8 +33,8 @@ class PhoneTreeLivewireController extends Component
                 return $this->marketing();
             case 2:
                 return $this->customerCare();
-            case 0:
-                return back;
+                // default:
+                //     return back;
         }
 
         return response($response)->header('Content-Type', 'text/xml');
@@ -48,7 +48,7 @@ class PhoneTreeLivewireController extends Component
             'action' => route('phone-tree.speak-to-agent'),
             'method' => 'GET'
         ]);
-        $gather->say('This is the customer care department, press 1 to listen to listen to a helpful voice note or press 2 to speak with an agent');
+        $gather->say('This is the customer care department, press 1 to listen to a helpful voice note or press 2 to speak with an agent');
         return response($response)->header('Content-Type', 'text/xml');
     }
 
@@ -65,9 +65,8 @@ class PhoneTreeLivewireController extends Component
         $phoneInput = $request->input('Digits');
         switch ($phoneInput) {
             case 1:
-                return $this->instruction();
+                return $response->say('Customer is king. This is the most helpful instruction you can get here. You can speak to an agent if you need more help');
             case 2:
-                //add caller to queue for agent
                 $response->say('Thanks for reaching out. You have been added to a queue. An agent will get to you shortly');
                 $response->enqueue('support', ['url' => 'about_to_connect.xml']);
                 return response($response)->header('Content-Type', 'text/xml');
@@ -81,10 +80,7 @@ class PhoneTreeLivewireController extends Component
     public function makeCall()
     {
         csrf_token();
-        // make the call to your agent
         $client = new Client(getenv("TWILIO_ACCOUNT_SID"), getenv("TWILIO_AUTH_TOKEN"));
-
-        //agent phone rings
         $call = $client->calls->create(
             +2347058096684,
             +16606284326,
